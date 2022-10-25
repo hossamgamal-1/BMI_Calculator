@@ -1,0 +1,11 @@
+flutter_native_splash:
+  # flutter pub run flutter_native_splash:create
+  color: "#1D1E32"
+  color_dark: "#1D1E32"
+  image: assets/images/bmi.png
+  android_12:
+    image: assets/images/bmi.png
+    color: "#1D1E32"
+    color_dark: "#1D1E32"
+
+   

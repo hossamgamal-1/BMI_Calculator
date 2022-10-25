@@ -1,22 +1,18 @@
-import 'package:bmi_app/services/bmi/view/widgets/calculations_screen/age_weight.dart';
-import 'package:bmi_app/services/bmi/view/widgets/calculations_screen/height.dart';
+import 'package:bmi_app/core/app_sizes/app_sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../screens/result_screen.dart';
+import 'package:bmi_app/services/bmi/providers/calculations_provider/calculations_provider.dart';
 
-class CalculateButton extends StatefulWidget {
+class CalculateButton extends StatelessWidget {
   const CalculateButton({Key? key}) : super(key: key);
 
-  @override
-  State<CalculateButton> createState() => _CalculateButtonState();
-}
-
-class _CalculateButtonState extends State<CalculateButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height / 10,
+      height: AppSizes(context).rotationDeviceHeight * 0.1,
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(20)),
@@ -32,18 +28,15 @@ class _CalculateButtonState extends State<CalculateButton> {
           ),
         ),
         onPressed: () {
-          setState(() {
-            myresult = double.parse(
-                (myweight / ((myheight / 100) * (myheight / 100)))
-                    .toStringAsFixed(2));
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return const Result();
-                },
-              ),
-            );
-          });
+          context.read<CalculationsProvider>().getResult();
+
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return const Result();
+              },
+            ),
+          );
         },
       ),
     );

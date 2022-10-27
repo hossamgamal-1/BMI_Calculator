@@ -17,12 +17,12 @@ class CalculateButton extends StatelessWidget {
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(20)),
       child: TextButton(
-        child: const Center(
+        child: Center(
           child: Text(
             'Calculate',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 26,
+              fontSize: 26 * AppSizes(context).rotationDeviceWidth / 480,
               fontWeight: FontWeight.bold,
             ),
           ),

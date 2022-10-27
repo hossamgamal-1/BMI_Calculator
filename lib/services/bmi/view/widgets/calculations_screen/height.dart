@@ -15,8 +15,7 @@ class Height extends StatelessWidget {
         color: AppDarkTheme.panelBackgroundColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      width: AppSizes(context).rotationDeviceWidth * 0.85,
-      height: AppSizes(context).rotationDeviceHeight * 0.25,
+      margin: EdgeInsets.all(10 * AppSizes(context).rotationDeviceWidth / 480),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -29,9 +28,15 @@ class Height extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Text('${watch.myheight}',
-                    style: Theme.of(context).textTheme.headline1),
+                    style: AppTextStyle(context).subTitleText),
               ),
-              const Text('CM', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                'CM',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppDarkTheme.unselectedIconColor,
+                ),
+              ),
             ],
           ),
           SliderTheme(

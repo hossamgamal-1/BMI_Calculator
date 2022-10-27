@@ -1,5 +1,6 @@
 import 'package:bmi_app/core/app_sizes/app_sizes.dart';
 import 'package:bmi_app/core/app_theme/app_dark_theme.dart';
+import 'package:bmi_app/services/bmi/model/enums/gender.dart';
 import 'package:bmi_app/services/bmi/view/widgets/calculations_screen/gender.dart';
 import 'package:flutter/material.dart';
 import '../widgets/calculations_screen/height.dart';
@@ -12,32 +13,75 @@ class CalculationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppSizes appSizes = AppSizes(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Body Mass Index'),
-        centerTitle: true,
+    AppBar appBar = AppBar(
+      title: Text(
+        'Body Mass Index',
+        style: TextStyle(
+          fontSize: 20 * AppSizes(context).rotationDeviceWidth / 480,
+        ),
       ),
-      body: SingleChildScrollView(
+      centerTitle: true,
+    );
+    double heightUnit = (MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top);
+    Widget widgetSizer(Widget widget) {
+      return SizedBox(
+        width: appSizes.rotationDeviceWidth * 0.9,
+        height: heightUnit * 0.27,
+        child: widget,
+      );
+    }
+
+    return Scaffold(
+      appBar: appBar,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: appSizes.fixedDeviceWidth * 0.05,
+        ),
+        child: SingleChildScrollView(
           child: Column(
-        children: [
-          Container(
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(
-                horizontal: appSizes.deviceOrientation == Orientation.portrait
-                    ? appSizes.fixedDeviceWidth * 0.05
-                    : 0,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              widgetSizer(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: appSizes.rotationDeviceWidth * 0.45,
+                      child: const Gender(UserGender.male),
+                    ),
+                    SizedBox(
+                      width: appSizes.rotationDeviceWidth * 0.45,
+                      child: const Gender(UserGender.female),
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                children: const [
-                  Gender(),
-                  Height(),
-                  AgeWieght(),
-                ],
-              )),
-          SizedBox(height: 8 * AppSizes(context).rotationDeviceWidth / 480),
-          const CalculateButton(),
-        ],
-      )),
+              widgetSizer(const Height()),
+              widgetSizer(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: appSizes.rotationDeviceWidth * 0.45,
+                      child: const AgeWeight(value: 'Weight'),
+                    ),
+                    SizedBox(
+                      width: appSizes.rotationDeviceWidth * 0.45,
+                      child: const AgeWeight(value: 'Age'),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: AppSizes(context).rotationDeviceWidth * 0.019,
+              ),
+              const CalculateButton(),
+            ],
+          ),
+        ),
+      ),
       backgroundColor: AppDarkTheme.themeData.canvasColor,
     );
   }
